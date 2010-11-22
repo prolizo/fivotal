@@ -1,0 +1,15 @@
+Start FitNesse this way now with Fivotal:
+
+On Mac:
+
+java -cp fitnesse.jar:fivotal.jar fitnesseMain.FitNesseMain -p 8080
+
+On Windows:
+
+java -cp fitnesse.jar;fivotal.jar fitnesseMain.FitNesseMain -p 8080
+
+Usage:
+
+!pivotal{#######}
+
+where ####### is the story ID (i.e. 6011234)

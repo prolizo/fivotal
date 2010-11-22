@@ -1,0 +1,12 @@
+Fivotal Wish List
+
+* Update README with instructions on use
+* Get more story information ( type, comments)
+* Mock out items (use mockito)
+* Ant build script
+* 100% code coverage
+* Support other planning tools
+* Move to open source GitHub
+* Read from properties files for configuration
+* Export items to show in pivotal in configuration file
+* Add ability to make comments from Fivotal
