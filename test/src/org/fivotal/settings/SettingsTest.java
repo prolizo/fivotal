@@ -22,17 +22,17 @@ public class SettingsTest {
 	}
 	
 	@Test
-	public void apiTokenReturnsProlizosKey() {
-		when(properties.getProperty("api.key")).thenReturn("3f45685fb2f5c1ba8ca838764f8d09e4");
+	public void apiTokenReturnsKeyFromProperties() {
+		when(properties.getProperty("api.key")).thenReturn("key");
 		
-		assertEquals("3f45685fb2f5c1ba8ca838764f8d09e4", settings.apiKey());
+		assertEquals("key", settings.apiKey());
 	}
 	
 	@Test
-	public void projectIdAlwaysReturnsGreenTeam() {
-		when(properties.getProperty("green.id")).thenReturn("50298");
+	public void getProjectIdReturnsFromProperties() {
+		when(properties.getProperty("green.id")).thenReturn("id");
 		
-		assertEquals("50298", settings.getProjectId("green"));
+		assertEquals("id", settings.getProjectId("green"));
 	}
 	
 	@Test(expected=FileNotFoundException.class)

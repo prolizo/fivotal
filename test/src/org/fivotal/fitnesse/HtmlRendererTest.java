@@ -15,7 +15,7 @@ public class HtmlRendererTest {
 	public void setUp() {
 		story = new Story();
 		story.setId("6020029");
-		story.setTitle("(8) Builder IDs on Tags");
+		story.setTitle("story title/name");
 		story.setCurrentState("accepted");
 		story.setOwnedBy("Owner");
 		story.setRequestedBy("Requester");
@@ -31,7 +31,7 @@ public class HtmlRendererTest {
 			   "\t</div>\n<a href=\"javascript:toggleCollapsable('6020029');\">" + 
 			   "<img src=\"/files/images/collapsableClosed.gif\" class=\"left\" id=\"img6020029\"></a>&nbsp;\n" + 
 			   "\t<span class=\"meta\">Story ID: 6020029</span>\n" + 
-			   "\t<div class=\"hidden\" id=\"6020029\">\n\t\t<b>(8) Builder IDs on Tags</b>\n<br/><br/>\n" + 
+			   "\t<div class=\"hidden\" id=\"6020029\">\n\t\t<b>story title/name</b>\n<br/><br/>\n" + 
 			   "\t\t<i>Requested By:&nbsp;Requester</i>\n<br/><br/>\n" + 
 			   "\t\t<i>Owned By:&nbsp;Owner</i>\n<br/><br/>\n" + 
 			   "\t\t<i>Current state:&nbsp;accepted</i>\n<br/><br/>" + 

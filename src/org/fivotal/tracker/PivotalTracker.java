@@ -17,7 +17,7 @@ import org.xml.sax.InputSource;
 import org.fivotal.models.Story;
 
 public class PivotalTracker {
-
+	
 	public String generateUrl(String projectId, String storyId) {
 		StringBuilder urlString = new StringBuilder();
 		urlString.append("http://www.pivotaltracker.com/services/v3/projects/")
@@ -88,40 +88,40 @@ public class PivotalTracker {
 	 * 
 	 * <?xml version="1.0" encoding="UTF-8"?>
 		<story>
-		  <id type="integer">5982529</id>
-		  <project_id type="integer">50298</project_id>
+		  <id type="integer">ID</id>
+		  <project_id type="integer">PROJECT_ID</project_id>
 		  <story_type>feature</story_type>
-		  <url>http://www.pivotaltracker.com/story/show/5982529</url>
+		  <url>http://www.pivotaltracker.com/story/show/ID</url>
 		  <estimate type="integer">2</estimate>
 		  <current_state>accepted</current_state>
-		  <description>As a user, when I view a page on the /new-homes/ path, 
-		I should see the title, meta description, and meta keywords as described in the attached spreadsheet.</description>
-		  <name>(8) Titles and Tags New-Homes Path</name>
-		  <requested_by>Joe Woods</requested_by>
+		  <description>As a user, when I do something, 
+		I should see something else.</description>
+		  <name>story title</name>
+		  <requested_by>Person A</requested_by>
 		  <created_at type="datetime">2010/11/01 13:41:28 EDT</created_at>
 		  <updated_at type="datetime">2010/11/19 12:38:36 EST</updated_at>
 		  <accepted_at type="datetime">2010/11/19 12:38:36 EST</accepted_at>
-		  <labels>ahg,p1,seo,seo_accepted</labels>
+		  <labels>labels</labels>
 		  <notes type="array">
 		    <note>
 		      <id type="integer">3158047</id>
-		      <text>SEO Accepted</text>
-		      <author>Joe Woods</author>
+		      <text>comment text</text>
+		      <author>Person A</author>
 		      <noted_at type="datetime">2010/11/18 14:55:12 EST</noted_at>
 		    </note>
 		    <note>
 		      <id type="integer">3176275</id>
 		      <text>QA Pass</text>
-		      <author>Charles Tootle</author>
+		      <author>QA Person</author>
 		      <noted_at type="datetime">2010/11/19 12:38:32 EST</noted_at>
 		    </note>
 		  </notes>
 		  <attachments type="array">
 		    <attachment>
 		      <id type="integer">687329</id>
-		      <filename>New-Homes_Path_titles___tags_-_Joe.xlsx</filename>
+		      <filename>filename.ext</filename>
 		      <description></description>
-		      <uploaded_by>Joe Woods</uploaded_by>
+		      <uploaded_by>Person A</uploaded_by>
 		      <uploaded_at type="datetime">2010/11/01 13:42:05 EDT</uploaded_at>
 		      <url>http://www.pivotaltracker.com/resource/download/687329</url>
 		    </attachment>
