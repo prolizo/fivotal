@@ -1,4 +1,18 @@
-Start FitNesse this way now with Fivotal:
+=Fivotal=
+
+Fivotal is a plugin for FitNesse that allows you to pull information about a story from PivotalTracker.
+
+==Getting Started==
+
+After either downloading or compiling the fivotal.jar file, place it in the same directory as the fitnesse.jar.
+
+Create a fivotal.properties like the one included in this project and update the configuration:
+
+api.key=<pivotal_api_key>
+
+<team_name>.id=<pivotal_project_id>
+
+Now start FitNesse the following way:
 
 On Mac:
 
@@ -8,8 +22,8 @@ On Windows:
 
 java -cp fitnesse.jar;fivotal.jar fitnesseMain.FitNesseMain -p 8080
 
-Usage:
+==Usage==
 
-!pivotal{#######}
+!pivotal{project_id,story_id}
 
-where ####### is the story ID (i.e. 6011234)
+where project_id is the Pivotal Project ID (i.e. 50021) and story_is is the story ID (i.e. 6011234)
