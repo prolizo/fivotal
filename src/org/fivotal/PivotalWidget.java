@@ -5,6 +5,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.fivotal.fitnesse.HtmlRenderer;
+import org.fivotal.net.HttpManager;
+import org.fivotal.net.RequestPropertyManager;
 import org.fivotal.settings.Settings;
 import org.fivotal.tracker.PivotalTracker;
 
@@ -20,6 +22,8 @@ public class PivotalWidget extends WikiWidget {
 	private String team;
 	private Settings settings;
 	private PivotalTracker tracker;
+	private HttpManager httpManager;
+	private RequestPropertyManager requestPropertyManager;
 	
 	public PivotalWidget(ParentWidget parent, String text) throws Exception {
 		super(parent);
@@ -30,11 +34,14 @@ public class PivotalWidget extends WikiWidget {
 		
 		settings = new Settings(new Properties());
 		settings.load("fivotal.properties");
-		tracker = new PivotalTracker();
+		requestPropertyManager = new RequestPropertyManager();
+		requestPropertyManager.addRequestProperty("X-TrackerToken", settings.apiKey());
+		httpManager = new HttpManager(requestPropertyManager);
+		tracker = new PivotalTracker(httpManager);
 	}
 
 	public String render() throws Exception {
-		return HtmlRenderer.renderStory(tracker.getStory(settings.getProjectId(team), storyId, settings.apiKey()));
+		return HtmlRenderer.renderStory(tracker.getStory(settings.getProjectId(team), storyId));
 	}
 
 	public String asWikiText() throws Exception {

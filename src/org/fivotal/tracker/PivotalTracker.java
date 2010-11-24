@@ -1,11 +1,6 @@
 package org.fivotal.tracker;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.StringReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -15,8 +10,15 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 import org.fivotal.models.Story;
+import org.fivotal.net.HttpManager;
 
 public class PivotalTracker {
+	
+	private HttpManager httpManager;
+	
+	public PivotalTracker(HttpManager httpManager) {
+		this.httpManager = httpManager;
+	}
 	
 	public String generateUrl(String projectId, String storyId) {
 		StringBuilder urlString = new StringBuilder();
@@ -26,29 +28,14 @@ public class PivotalTracker {
 		return urlString.toString();
 	}
 
-	public Story getStory(String projectId, String storyId, String apiKey) throws Exception {
-		URL url = new URL(generateUrl(projectId, storyId));
-		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-		connection.setRequestMethod("GET");
-		connection.setRequestProperty("X-TrackerToken", apiKey);
-		connection.connect();
-		
-		if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+	public Story getStory(String projectId, String storyId) throws Exception {
+		String response = httpManager.get(generateUrl(projectId, storyId));
+		if (!response.isEmpty()) {
+			InputSource is = new InputSource();
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();
-			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			String line;
-			StringBuffer sb = new StringBuffer();
-			while ((line = in.readLine()) != null) {
-				sb.append(line);
-				sb.append('\n'); // preserve new lines in the response
-			}
-			in.close();
-			
-			InputSource is = new InputSource();
-	        is.setCharacterStream(new StringReader(sb.toString()));
+			is.setCharacterStream(new StringReader(response));
 			Document doc = db.parse(is);
-			in.close();
 			
 			NodeList stories = doc.getElementsByTagName("story");
 			Element storyElement = (Element) stories.item(0); // should be only one story

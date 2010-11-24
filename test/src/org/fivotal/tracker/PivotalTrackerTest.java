@@ -7,15 +7,16 @@ import org.junit.Before;
 import org.junit.Test;
 
 import org.fivotal.models.Story;
-import org.fivotal.settings.Settings;
-
+import org.fivotal.net.HttpManager;
 
 public class PivotalTrackerTest {
 	private PivotalTracker tracker;
+	private HttpManager httpManager;
 	
 	@Before
 	public void setUp() {
-		tracker = new PivotalTracker();
+		httpManager = mock(HttpManager.class);
+		tracker = new PivotalTracker(httpManager);
 	}
 	
 	@Test
@@ -25,19 +26,27 @@ public class PivotalTrackerTest {
 	
 	@Test
 	public void getStoryReturnsStringFromPivotal() throws Exception {
-		// TODO:  Need to mock this out.
-		Settings settings = mock(Settings.class);
-		when(settings.getProjectId("green")).thenReturn("50298");
-		when(settings.apiKey()).thenReturn("3f45685fb2f5c1ba8ca838764f8d09e4");
+		String storyResponse = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+							   "\t\t<story>\n" + 
+							   "\t\t\t<id type=\"integer\">storyId</id>\n" +
+							   "\t\t\t<project_id type=\"integer\">project_id</project_id>\n" + 
+							   "\t\t\t<story_type>feature</story_type>\n" +
+							   "\t\t\t<url>http://www.pivotaltracker.com/story/show/storyId</url>\n" +
+							   "\t\t\t<current_state>accepted</current_state>\n" + 
+							   "\t\t\t<description>As a user, when I do something, \nI should see something else.</description>\n" +
+							   "\t\t\t<name>story title</name>\n" +
+							   "\t\t\t<requested_by>Person A</requested_by>\n" + 
+							   "\t\t</story>";
+		when(httpManager.get("http://www.pivotaltracker.com/services/v3/projects/projectId/stories/storyId")).thenReturn(storyResponse);
 		
-		Story returnedStory = tracker.getStory(settings.getProjectId("green"), "5982529", settings.apiKey());
+		Story returnedStory = tracker.getStory("projectId", "storyId");
 		
-		assertEquals("As a user, when I view a page on the /new-homes/ path, \nI should see the title, meta description, and meta keywords as described in the attached spreadsheet.", returnedStory.getDescription());
-		assertEquals("5982529", returnedStory.getId());
-		assertEquals("(8) Titles and Tags New-Homes Path", returnedStory.getTitle());
+		assertEquals("As a user, when I do something, \nI should see something else.", returnedStory.getDescription());
+		assertEquals("storyId", returnedStory.getId());
+		assertEquals("story title", returnedStory.getTitle());
 		assertEquals("", returnedStory.getOwnedBy());
-		assertEquals("Joe Woods", returnedStory.getRequestedBy());
+		assertEquals("Person A", returnedStory.getRequestedBy());
 		assertEquals("accepted", returnedStory.getCurrentState());
-		assertEquals("http://www.pivotaltracker.com/story/show/5982529", returnedStory.getUrl());
+		assertEquals("http://www.pivotaltracker.com/story/show/storyId", returnedStory.getUrl());
 	}
 }
